@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Release Notes — Web Production · April 16, 2026</title>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #161a23;
+      --surface2: #1e2433;
+      --border: #2a3045;
+      --accent: #c9952a;
+      --accent2: #6ee7b7;
+      --text: #e8ecf4;
+      --muted: #7a849e;
+      --tag-tasks: #2a2010;
+      --tag-tasks-text: #e4b84a;
+      --tag-vault: #1a2a3a;
+      --tag-vault-text: #60b4f0;
+      --tag-profile: #1a3a2e;
+      --tag-profile-text: #4ade80;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #0d0f14 0%, #1c1608 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 48px 40px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .header-logo {
+      width: 48px;
+      height: 48px;
+      background: var(--accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -1px;
+      color: #fff;
+    }
+
+    .header-content h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .header-content h1 span {
+      color: var(--accent);
+    }
+
+    .header-meta {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-meta .badge {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── LAYOUT ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 48px 80px;
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      margin-top: 48px;
+    }
+
+    .section-label:first-child { margin-top: 0; }
+
+    .section-label h2 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── FEATURE CARDS ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: #4a3d20; }
+
+    .card.feature-flag {
+      border-color: #3a2a50;
+    }
+    .card.feature-flag:hover { border-color: #6a4a90; }
+
+    .card-body {
+      padding: 28px 32px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .card-title-group { flex: 1; }
+
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    .tag.tasks {
+      background: var(--tag-tasks);
+      color: var(--tag-tasks-text);
+    }
+
+    .tag.vault {
+      background: var(--tag-vault);
+      color: var(--tag-vault-text);
+    }
+
+    .tag.profile {
+      background: var(--tag-profile);
+      color: var(--tag-profile-text);
+    }
+
+    .tag.ticket {
+      background: #1e2230;
+      color: var(--muted);
+      font-family: monospace;
+      font-size: 11px;
+    }
+
+    .tag.flag {
+      background: #2a1a3a;
+      color: #c084fc;
+      border: 1px solid #4a2a6a;
+    }
+
+    .tag.wip {
+      background: #2a1a10;
+      color: #fb923c;
+      border: 1px solid #5a3a1a;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: -0.2px;
+      color: var(--text);
+    }
+
+    .card-desc {
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 680px;
+    }
+
+    .card-note {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── VIDEO / IMAGE SECTION ── */
+    .jam-section {
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+      padding: 0;
+      position: relative;
+    }
+
+    .jam-embed {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
+    }
+
+    .jam-img {
+      width: 100%;
+      display: block;
+      max-height: 540px;
+      object-fit: contain;
+      background: #111318;
+    }
+
+    .jam-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--surface2);
+      cursor: default;
+    }
+
+    .jam-placeholder .jam-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f7cff22, #6ee7b722);
+      border: 1.5px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    /* ── FEATURE FLAG BANNER ── */
+    .flag-banner {
+      background: #1a1025;
+      border-top: 1px solid #3a2a50;
+      padding: 14px 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .flag-banner-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .flag-banner p {
+      font-size: 13.5px;
+      color: #c084fc;
+      line-height: 1.6;
+    }
+
+    .flag-banner strong {
+      color: #d8b4fe;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── SUMMARY BAR ── */
+    .summary-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 28px;
+      margin-bottom: 48px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .summary-bar p {
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .summary-bar strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">LL</div>
+  <div class="header-content">
+    <h1>What's new in <span>Tread</span></h1>
+    <div class="header-meta">
+      <span class="badge">Web Production</span>
+      <span class="badge">April 16, 2026</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Summary -->
+  <div class="summary-bar">
+    <p><strong>Web production highlights — April 16, 2026.</strong> This release covers improvements across Tasks and Vault — from smarter task creation and comment visibility, to bulk file downloads and new Vault API capabilities. The full release also includes mobile improvements, backend changes, and hotfixes not listed here.</p>
+  </div>
+
+  <!-- ── SECTION: TASKS ── -->
+  <div class="section-label"><h2>Tasks</h2></div>
+
+  <div class="cards-grid">
+
+    <!-- 8961: Highlight newly created task -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag tasks">Tasks</span>
+              <span class="tag ticket">TREAD1-8961</span>
+            </div>
+            <div class="card-title">Highlight newly created task</div>
+          </div>
+        </div>
+        <p class="card-desc">When a new task is created, the row is briefly highlighted in the task list — a subtle background flash that helps coaches immediately locate the task they just added without scrolling to find it. The highlight fades automatically after ~2 seconds.</p>
+      </div>
+      <div class="jam-section">
+        <video class="jam-embed" src="April 16 WEB RELEASE/8961 .mp4" controls autoplay muted loop playsinline style="background:#000;"></video>
+      </div>
+    </div>
+
+    <!-- 9079: Display task title with athlete name -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag tasks">Tasks</span>
+              <span class="tag ticket">TREAD1-9079</span>
+            </div>
+            <div class="card-title">Athlete name shown alongside task title</div>
+          </div>
+        </div>
+        <p class="card-desc">The task list now displays <strong style="color: var(--text);">Task Title · Athlete Name</strong> in the first column — making it faster to scan which task belongs to which athlete at a glance. The athlete name is appended on the UI only; the stored task title is unchanged.</p>
+        <p class="card-desc" style="margin-top: 8px;">If a task has no related athlete, or has multiple related athletes, only the task title is shown.</p>
+      </div>
+      <div class="jam-section">
+        <video class="jam-embed" src="April 16 WEB RELEASE/9079.mp4" controls autoplay muted loop playsinline style="background:#000;"></video>
+      </div>
+    </div>
+
+    <!-- 9091: Download All in task comments -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag tasks">Tasks</span>
+              <span class="tag ticket">TREAD1-9091</span>
+            </div>
+            <div class="card-title">"Download All" added to task comments</div>
+          </div>
+        </div>
+        <p class="card-desc">The "Download All" button is now available in the task comments section — not just in the task description. Coaches who attach videos via comments can now bulk-download all comment files in one click, consistent with the existing behavior in the description.</p>
+      </div>
+      <div class="jam-section">
+        <video class="jam-embed" src="April 16 WEB RELEASE/9091.mp4" controls autoplay muted loop playsinline style="background:#000;"></video>
+      </div>
+    </div>
+
+    <!-- 9282: Flash unread comments -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag tasks">Tasks</span>
+              <span class="tag ticket">TREAD1-9282</span>
+            </div>
+            <div class="card-title">Unread comments flash on task open</div>
+          </div>
+        </div>
+        <p class="card-desc">When opening a task that has unread comments, new comments are now briefly flashed/highlighted for ~0.5 seconds — giving coaches a clear visual cue pointing to the new content without having to manually scan through the thread.</p>
+      </div>
+      <div class="jam-section">
+        <video class="jam-embed" src="April 16 WEB RELEASE/9282.mp4" controls autoplay muted loop playsinline style="background:#000;"></video>
+      </div>
+    </div>
+
+    <!-- 9374: Auto-populate Related Athletes from Calendar / Calls -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag tasks">Tasks</span>
+              <span class="tag ticket">TREAD1-9374</span>
+            </div>
+            <div class="card-title">Auto-populate athlete & task type from Calendar and Calls</div>
+          </div>
+        </div>
+        <p class="card-desc">Creating a task from a Calendar event or a Calls kebab menu now automatically pre-populates the Related Athletes field with the relevant athlete — no more manual search. The Task Type field also pre-fills with the last type the coach used, reducing repetitive setup on every task.</p>
+      </div>
+      <div class="jam-section">
+        <video class="jam-embed" src="April 16 WEB RELEASE/9374.mp4" controls autoplay muted loop playsinline style="background:#000;"></video>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION: VAULT ── -->
+  <div class="section-label"><h2>Vault</h2></div>
+
+  <div class="cards-grid">
+
+    <!-- 8974: Bulk download in Vault -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag vault">Vault</span>
+              <span class="tag ticket">TREAD1-8974</span>
+            </div>
+            <div class="card-title">Bulk download selected files from Vault</div>
+          </div>
+        </div>
+        <p class="card-desc">Vault now supports multi-select and bulk download. Click "Select", choose multiple files — videos, images, or documents — and a "Download" button appears at the top. Clicking it downloads all selected files at once. Deselect all or cancel to exit select mode.</p>
+      </div>
+      <div class="jam-section">
+        <video class="jam-embed" src="April 16 WEB RELEASE/8974.mp4" controls autoplay muted loop playsinline style="background:#000;"></video>
+      </div>
+    </div>
+
+    <!-- 8967: Vault API — restricted folders -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag vault">Vault</span>
+              <span class="tag ticket">TREAD1-8967</span>
+            </div>
+            <div class="card-title">Vault API — upload to restricted folders & move files</div>
+          </div>
+        </div>
+        <p class="card-desc">Two new API capabilities for Vault restricted folders. Files can now be uploaded directly to a restricted folder via API, and moved between the Restricted folder and an athlete's main vault programmatically. Athletes only see files after they've been moved out of the Restricted folder.</p>
+        <p class="card-desc" style="margin-top: 8px;">New endpoints: upload to a specified folder, list all folders for an athlete, move files between folders. Documented at <strong style="color:var(--text)">api.tread-app.com/docs</strong>.</p>
+      </div>
+      <div class="jam-section">
+        <img class="jam-img" src="April 16 WEB RELEASE/8967.png" alt="Vault API restricted folders" />
+      </div>
+    </div>
+
+    <!-- 8752: Screen recording for annotation tool — feature flag -->
+    <div class="card feature-flag">
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-tags">
+              <span class="tag vault">Vault</span>
+              <span class="tag ticket">TREAD1-8752</span>
+              <span class="tag flag">⚑ Feature Flag</span>
+              <span class="tag wip">In Progress</span>
+            </div>
+            <div class="card-title">Screen recording for Drawing & Annotation tool</div>
+          </div>
+        </div>
+        <p class="card-desc">Coaches can now tap "Record" inside the drawing/annotation tool to capture voice + all drawing actions overlaid on a video in real-time. The output is an MP4 showing the video, annotations, and audio — giving athletes a full walkthrough instead of a static screenshot.</p>
+        <p class="card-desc" style="margin-top: 8px;">The recording can be stopped, previewed, and saved. Completed recordings are saved to Vault.</p>
+      </div>
+      <div class="flag-banner">
+        <span class="flag-banner-icon">🚧</span>
+        <p><strong>Hidden on production under a feature flag.</strong> Vault save is implemented and working. We're currently finishing the integration for sending recorded clips directly from <strong>Tasks</strong> and <strong>Chat</strong> — this will be enabled broadly once both surfaces are complete.</p>
+      </div>
+      <div class="jam-section">
+        <video class="jam-embed" src="April 16 WEB RELEASE/8752.mp4" controls muted playsinline style="background:#000;"></video>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <span>Tread · Web Production Release · April 16, 2026</span>
+  <span>Built by <a href="#">Launch Labs</a></span>
+</footer>
+
+</body>
+</html>
